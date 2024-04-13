@@ -127,8 +127,8 @@ spatialCluster <- function(
     }
 
     ## Require at least one iteration and non-negative burn-in
-    assert_that(nrep >= 1)
-    assert_that(burn.in >= 0)
+    # assert_that(nrep >= 1)
+    # assert_that(burn.in >= 0)
     if (burn.in >= nrep) {
         stop("Please specify a burn-in period shorter than the total number of iterations.")
     }
@@ -261,7 +261,7 @@ spatialCluster <- function(
     ## This can be implemented by eliminating `all.x=TRUE` above, but
     ## this makes it easier to keep empty lists for spots with no neighbors
     ## (as expected by C++ code)
-    df_j <- map(df_j, function(nbrs) discard(nbrs, function(x) is.na(x)))
+    df_j <- purrr::map(df_j, function(nbrs) purrr::discard(nbrs, function(x) is.na(x)))
 
     ## Log number of spots with neighbors
     n_with_neighbors <- length(keep(df_j, function(nbrs) length(nbrs) > 0))

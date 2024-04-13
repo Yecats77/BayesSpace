@@ -1,8 +1,8 @@
 #ifndef BAYESSPACE_DOUBLE_STATES_VECTOR_H
 #define BAYESSPACE_DOUBLE_STATES_VECTOR_H
-
 #include <RcppArmadillo.h>
-
+typedef uint64_t u_int64_t;
+typedef uint32_t u_int32_t;
 template <class T> class DoubleStatesVector {
 private:
   arma::uvec __row_idx;
@@ -34,7 +34,7 @@ public:
 
 template <class T>
 DoubleStatesVector<T>::DoubleStatesVector(int n_row)
-    : __col_idx(n_row, arma::fill::zeros), values(n_row, 2) {
+  : __col_idx(n_row, arma::fill::zeros), values(n_row, 2) {
   std::vector<u_int32_t> tmp(n_row);
   std::iota(tmp.begin(), tmp.end(), 0);
   __row_idx = arma::uvec(tmp);
@@ -42,12 +42,12 @@ DoubleStatesVector<T>::DoubleStatesVector(int n_row)
 
 template <class T>
 DoubleStatesVector<T>::DoubleStatesVector(const DoubleStatesVector &v)
-    : __row_idx(v.__row_idx), __col_idx(v.__col_idx), values(v.values) {}
+  : __row_idx(v.__row_idx), __col_idx(v.__col_idx), values(v.values) {}
 
 template <class T>
 DoubleStatesVector<T>::DoubleStatesVector(DoubleStatesVector &&v)
-    : __row_idx(std::move(v.__row_idx)), __col_idx(std::move(v.__col_idx)),
-      values(std::move(v.values)) {}
+  : __row_idx(std::move(v.__row_idx)), __col_idx(std::move(v.__col_idx)),
+    values(std::move(v.values)) {}
 
 template <class T> DoubleStatesVector<T>::~DoubleStatesVector() {
   __row_idx.reset();
@@ -118,7 +118,7 @@ DoubleStatesVector<T>::cols(const arma::uvec &idx) const {
 template <class T>
 void
 DoubleStatesVector<T>::set_col_idx(
-    const arma::uword idx, const arma::uword val
+  const arma::uword idx, const arma::uword val
 ) {
   if (val > 1 || idx > __row_idx.n_elem) {
     throw "Invalid vector access.";

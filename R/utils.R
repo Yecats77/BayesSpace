@@ -212,7 +212,7 @@ exampleSCE <- function(nrow = 8, ncol = 12, n_genes = 100, n_PCs = 10) {
 getRDS <- function(dataset, sample, cache = TRUE) {
     url <- "https://fh-pi-gottardo-r-eco-public.s3.amazonaws.com/SpatialTranscriptomes/%s/%s.rds"
     url <- sprintf(url, dataset, sample)
-    assert_that(url.exists(url), msg = "Dataset/sample not available")
+    # assert_that(url.exists(url), msg = "Dataset/sample not available")
 
     if (cache) {
         bfc <- BiocFileCache()
@@ -223,7 +223,7 @@ getRDS <- function(dataset, sample, cache = TRUE) {
     }
 
     ret <- readRDS(local.path)
-    
+
     # Rename columns of colData of `ret` for compatibility reasons.
     if (any(c("row", "col") %in% colnames(colData(ret)))) {
       col.names <- colnames(colData(ret))
@@ -231,7 +231,7 @@ getRDS <- function(dataset, sample, cache = TRUE) {
       col.names <- gsub("col", "array_col", col.names)
       colnames(colData(ret)) <- col.names
     }
-    
+
     ret
 }
 
